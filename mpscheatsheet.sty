@@ -1,0 +1,220 @@
+% MIT License
+
+% Copyright (c) 2017 Marlin Strub
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+% Provides the 'mpscheatsheet' package.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mpscheatsheet}
+
+\newif\ifingerman
+\DeclareOption{german}{\global\ingermantrue}
+\DeclareOption{english}{\global\ingermanfalse}
+
+\newif\ifblue
+\newif\ifred
+\newif\ifgreen
+\newif\ifgrey
+\DeclareOption{blue}{
+    \global\bluetrue
+    \global\redfalse
+    \global\greenfalse
+    \global\greyfalse
+}
+\DeclareOption{red}{
+    \global\bluefalse
+    \global\redtrue
+    \global\greenfalse
+    \global\greyfalse
+}
+\DeclareOption{green}{
+    \global\bluefalse
+    \global\redfalse
+    \global\greentrue
+    \global\greyfalse
+}
+\DeclareOption{grey}{
+    \global\bluefalse
+    \global\redfalse
+    \global\greenfalse
+    \global\greytrue
+}
+
+\ExecuteOptions{english,blue}
+\ProcessOptions
+
+% Fields to specify the lecture name and email to be displayed in the header.
+\newcommand{\@lecturename}{}
+\newcommand{\lecturename}[1]{\gdef\@lecturename{#1}}
+\newcommand{\@email}{}
+\newcommand{\email}[1]{\gdef\@email{#1}}
+
+% Reduce the amount of whitespace.
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{1.3em}
+\setlength{\footskip}{0.1cm}
+\setlength{\textheight}{19.7cm}
+\setlength{\parindent}{0.0em}
+\setlength{\parskip}{0em}
+\setlength{\topskip}{-2em}
+\setlength{\topsep}{0.4em}
+\setlength{\partopsep}{0.1em}
+\setlength{\tabcolsep}{0.2em}
+\renewcommand{\arraystretch}{1}
+\renewcommand{\arraycolsep}{0.5em}
+
+% Lists and enumerations should produce minimal whitespace.
+\usepackage{enumitem}
+\setlist[enumerate]{
+  itemsep     = 0.0em,
+  topsep      = 0.2em,
+  parsep      = 0.2em,
+  itemindent  = 0.1em,
+  leftmargin  = 1.2em}
+\setlist[itemize]{
+  itemsep     = 0.0em,
+  topsep      = 0.2em,
+  parsep      = 0.2em,
+  itemindent  = 0.1em,
+  leftmargin  = 1.2em}
+\usepackage{multirow}
+
+% Landscape mode with multicols enabled.
+\usepackage[
+  a4paper,
+  landscape,
+  left    = 0.4cm,
+  right   = 0.4cm,
+  top     = 0.2cm,
+  bottom  = 0.2cm,
+  includeheadfoot
+  ]{geometry}
+
+\usepackage{multicol}
+  \setlength{\columnsep}{0.25cm}
+  \setlength{\columnseprule}{0.0cm}
+
+% Date and time
+\usepackage{datetime}
+\newdateformat{onlymonthandyear}{\monthname[\THEMONTH] \THEYEAR}
+
+% Declare the header and the footer.
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{\@lecturename}}
+\rhead{\texttt{\@email}, \onlymonthandyear\today}
+\ifingerman
+  \chead{Seite \thepage}
+\else
+  \chead{Page \thepage}
+\fi
+\cfoot{}
+
+% Define the colors for the coloring options.
+\usepackage{xcolor}
+\definecolor{mpsblue}{RGB}{11,93,174}
+\definecolor{mpsred}{RGB}{206,62,21}
+\definecolor{mpsgreen}{RGB}{100,161,27}
+\definecolor{mpsgrey}{RGB}{120,120,120}
+
+% Process the coloring option.
+\newcommand{\chosencolor}{}
+\ifblue
+  \renewcommand{\chosencolor}{mpsblue}
+\fi
+\ifred
+  \renewcommand{\chosencolor}{mpsred}
+\fi
+\ifgreen
+  \renewcommand{\chosencolor}{mpsgreen}
+\fi
+\ifgrey
+  \renewcommand{\chosencolor}{mpsgrey}
+\fi
+
+
+% Define the title layout.
+\usepackage{titlesec}
+\titleformat{\section}[display]{\bfseries\center\Large}{}{}{\begin{sect}\color{white}\center}[\end{sect}]
+\titleformat{\subsection}[display]{\bfseries\large}{}{}{\begin{subsect}}[\end{subsect}]
+\titleformat{\subsubsection}[display]{\bfseries}{}{}{\begin{subsubsect}}[\end{subsubsect}]
+
+\titlespacing*{\section}{0.1em}{0.4em plus 0.1em minus 0.0em}{0.0em plus 0.1em}
+\titlespacing*{\subsection}{0.1em}{0.4em plus 0.1em minus 0.0em}{0.0em plus 0.1em}
+\titlespacing*{\subsubsection}{0.1em}{0.4em plus 0.1em minus 0.0em}{0.0em plus 0.1em}
+
+\usepackage[framemethod=TikZ]{mdframed}
+\newenvironment{sect}{
+\begin{mdframed}[
+  backgroundcolor     = \chosencolor,
+  linecolor           = none,
+  leftmargin          = -2pt,
+  rightmargin         = -2pt,
+  skipabove           = 0pt,
+  skipbelow           = 0pt,
+  innertopmargin      = 2.5pt,
+  innerbottommargin   = 1.5pt,
+  innerleftmargin     = 2pt,
+  innerrightmargin    = 2pt ,
+  roundcorner         = 1pt
+]
+}{
+  \end{mdframed}
+  \vspace*{-3pt}
+}
+
+\newenvironment{subsect}{
+\begin{mdframed}[
+  backgroundcolor     = \chosencolor!40,
+  linecolor           = none,
+  leftmargin          = -2pt,
+  rightmargin         = -2pt,
+  skipabove           = 0pt,
+  skipbelow           = 0pt,
+  innertopmargin      = 2pt,
+  innerbottommargin   = 2pt,
+  innerleftmargin     = 2pt,
+  innerrightmargin    = 2pt ,
+  roundcorner         = 1pt
+]
+}{
+  \end{mdframed}
+  \vspace*{-3pt}
+}
+
+\newenvironment{subsubsect}{
+\begin{mdframed}[
+  backgroundcolor     = \chosencolor!20,
+  linecolor           = none,
+  leftmargin          = -2pt,
+  rightmargin         = -2pt,
+  skipabove           = 0pt,
+  skipbelow           = 0pt,
+  innertopmargin      = 1pt,
+  innerbottommargin   = 1pt,
+  innerleftmargin     = 2pt,
+  innerrightmargin    = 2pt ,
+  roundcorner         = 1pt
+]
+}{
+  \end{mdframed}
+  \vspace*{-3pt}
+}
