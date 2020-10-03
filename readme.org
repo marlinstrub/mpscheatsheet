@@ -1,6 +1,6 @@
-* MPS Cheet Sheat
+* MPS Cheat Sheet
 
-This repository contains a LaTeX documentclass called ~mpscheatsheet~ to create clean and space-efficient cheat sheets. Simply specify
+This repository contains a LaTeX document class called ~mpscheatsheet~ to create clean and space-efficient cheat sheets. Simply specify
 
 #+begin_src latex
 \documentclass[columns=3,8pt]{mpscheatsheet}
