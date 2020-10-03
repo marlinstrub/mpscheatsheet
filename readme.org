@@ -1,0 +1,27 @@
+* MPS Cheet Sheat
+
+This repository contains a LaTeX documentclass called ~mpscheatsheet~ to create clean and space-efficient cheat sheets. Simply specify
+
+#+begin_src latex
+\documentclass[columns=3,8pt]{mpscheatsheet}
+#+end_src
+
+at the beginning of your document, write some text, and it will look like this:
+
+#+attr_html: title="An example cheat sheet with the `mpscheatsheet` class."
+[[file:screenshots/example.jpg]]
+
+The header uses the values from the ~\title~, ~\author~, and ~\email~ commands. See the ~tex~ document in this repository for a minimal example.
+
+The number of columns can be specified with the user option ~columns=N~ where ~N >= 2~. The default number of columns is ~4~.
+
+#+attr_html: title="Different number of columns in the `mpscheatsheet` class."
+[[file:screenshots/columns.jpg]]
+
+The background color of the section headings can be specified with the user option ~sectioncolor={R, G, B}~, where ~R~, ~G~, and ~B~ are values between ~0~ and ~255~ that represent the red, green, and blue components of the color, respectively. 
+
+#+attr_html: title="Different colored headings in the `mpscheatsheet` class."
+[[file:screenshots/color.jpg]]
+
+The class builds on the (ext)article class and accepts any option that the extarticle class accepts, e.g., ~8pt~ for smaller text size. The only option that's disabled is ~twocolumn~, use ~columns=2~ instead.
+
