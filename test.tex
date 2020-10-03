@@ -1,15 +1,16 @@
-\documentclass[8pt]{scrartcl}
+\documentclass[columns=3,8pt]{mpscheatsheet}
 
-\usepackage{mpscheatsheet}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
 
 \usepackage{blindtext}
 
-\lecturename{Lecture Name, Number, University}
+\title{Lecture Name}
+\author{Marlin Strub}
 \email{author@email.com}
 
 \begin{document}
-
-\begin{multicols*}{3}
 
 \section*{Section}
 
@@ -23,7 +24,7 @@
 \subsubsection*{Subsubsection}
 
 \blindtext
-\blindenumerate[3]
+\blindenumerate[5]
 
 \section*{Another Section}
 
@@ -34,7 +35,5 @@
 \blindtext
 \blinditemize[3]
 \blindenumerate[3]
-
-\end{multicols*}
 
 \end{document}
